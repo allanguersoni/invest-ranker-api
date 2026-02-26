@@ -3,7 +3,7 @@
 Este projeto é um Micro-SaaS de inteligência financeira que utiliza uma arquitetura moderna para realizar análise de risco e ranqueamento de Fundos Imobiliários (FIIs) em tempo real.
 
 ## 🛠️ Tecnologias Utilizadas
-* **Backend:** Java 21 com Spring Boot 3
+* **Backend:** Java 21 com Spring Boot 4
 * **Mensageria:** Apache Kafka para processamento assíncrono
 * **Banco de Dados:** PostgreSQL
 * **Coleta de Dados:** Python com motor de extração profunda (Bypass Cloudflare)
