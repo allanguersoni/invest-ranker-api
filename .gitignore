@@ -1,0 +1,20 @@
+# SRE Lab - Ignore List
+# =========================
+
+# Java / Maven
+app/target/
+app/.mvn/
+!app/.mvn/wrapper/maven-wrapper.jar
+app/mvnw
+app/mvnw.cmd
+
+# Python
+bot/venv/
+bot/__pycache__/
+*.pyc
+
+# IDEs e OS
+.vscode/
+.idea/
+.env
+.DS_Store

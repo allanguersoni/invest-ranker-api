@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitetura - Lab Invest Ranker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .mermaid { display: flex; justify-content: center; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+    <nav class="bg-slate-900 text-white p-4 shadow-md">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <h1 class="text-2xl font-bold flex items-center gap-2">
+                <i class="fa-solid fa-network-wired"></i> LAB-INVEST-RANKER SRE
+            </h1>
+            <span class="text-sm bg-blue-600 px-3 py-1 rounded-full font-semibold">Versão 1.0</span>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Coluna Esquerda: Texto e Explicação -->
+        <div class="col-span-1 space-y-6">
+            
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
+                    <i class="fa-solid fa-map-location-dot text-blue-500"></i> O Mapa da Arquitetura
+                </h2>
+                <div class="space-y-4 text-sm text-slate-600">
+                    <div>
+                        <h3 class="font-bold text-slate-800"><i class="fa-brands fa-linux text-yellow-600"></i> Mundo Local (Linux/WSL)</h3>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li><strong>Robô Python:</strong> Executa o web scraping isolado em uma <code>venv</code>.</li>
+                            <li><strong>Motor Java (Spring Boot):</strong> Atua como API REST e Worker de processamento. Roda via <code>./mvnw</code>.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800"><i class="fa-brands fa-docker text-blue-500"></i> Mundo Conteinerizado (Docker)</h3>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li><strong>PostgreSQL:</strong> Banco de dados relacional para persistência.</li>
+                            <li><strong>Kafka:</strong> Broker de mensageria para processamento assíncrono.</li>
+                            <li><strong>Prometheus & Grafana:</strong> Stack de monitoramento e visualização (Top 10 SRE).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
+                    <i class="fa-solid fa-folder-tree text-green-500"></i> Estrutura do Projeto Java
+                </h2>
+                <div class="bg-slate-900 text-slate-300 p-4 rounded-lg font-mono text-xs overflow-x-auto">
+                    <div><i class="fa-regular fa-folder-open text-blue-400"></i> com.lab.invest_ranker</div>
+                    <div class="ml-4 mt-2"><i class="fa-solid fa-folder text-yellow-400"></i> consumer</div>
+                    <div class="ml-8 text-green-400">↳ InvestimentoConsumer.java</div>
+                    <div class="ml-4 mt-2"><i class="fa-solid fa-folder text-yellow-400"></i> controller</div>
+                    <div class="ml-8 text-green-400">↳ InvestimentoController.java</div>
+                    <div class="ml-8 text-green-400">↳ SimuladorController.java</div>
+                    <div class="ml-4 mt-2"><i class="fa-solid fa-folder text-yellow-400"></i> model</div>
+                    <div class="ml-8 text-green-400">↳ FundoImobiliario.java</div>
+                    <div class="ml-4 mt-2"><i class="fa-solid fa-folder text-yellow-400"></i> repository</div>
+                    <div class="ml-8 text-green-400">↳ FundoImobiliarioRepository.java</div>
+                    <div class="ml-4 mt-2"><i class="fa-solid fa-folder text-yellow-400"></i> service</div>
+                    <div class="ml-8 text-green-400">↳ InvestimentoService.java</div>
+                    <div class="ml-4 mt-2 text-blue-300">⚙️ InvestRankerApplication.java</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Coluna Direita: Diagrama -->
+        <div class="col-span-1 lg:col-span-2 space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-slate-800">
+                    <i class="fa-solid fa-project-diagram text-indigo-500"></i> Fluxograma SRE (O Caminho do Dado)
+                </h2>
+                
+                <div class="overflow-x-auto bg-slate-50 p-4 rounded-lg border border-slate-100">
+                    <pre class="mermaid">
+                        graph TD
+                            %% Definindo Estilos
+                            classDef external fill:#f3f4f6,stroke:#9ca3af,stroke-width:2px,stroke-dasharray: 5 5;
+                            classDef python fill:#fef08a,stroke:#ca8a04,stroke-width:2px;
+                            classDef java fill:#bfdbfe,stroke:#2563eb,stroke-width:2px;
+                            classDef docker fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px;
+                            classDef database fill:#bbf7d0,stroke:#16a34a,stroke-width:2px;
+                            classDef monitor fill:#fed7aa,stroke:#ea580c,stroke-width:2px;
+
+                            %% Elementos Externos
+                            Fundamentus(("🌐 Site\nFundamentus")):::external
+                            WebClient(("📱 Futuros\nApps Web")):::external
+
+                            subgraph WSL ["💻 Mundo Local (Linux / WSL)"]
+                                direction TB
+                                Bot["🐍 Robô Python\n(rastreador_pro.py)\n[Extração e Limpeza]"]:::python
+                                
+                                subgraph SpringBoot ["☕ Motor Java (Spring Boot)"]
+                                    direction TB
+                                    Controller["⚙️ InvestimentoController\n[Ingestão / API REST]"]:::java
+                                    Consumer["🎧 InvestimentoConsumer\n[Processamento Assíncrono]"]:::java
+                                    Service["🧠 InvestimentoService\n[Motor de Risco / Score]"]:::java
+                                    Repo["🗄️ FundoImobiliarioRepository\n[Armazenamento]"]:::java
+                                end
+                            end
+
+                            subgraph Docker ["🐳 Mundo Conteinerizado (Docker Desktop)"]
+                                direction TB
+                                Kafka{"📬 Apache Kafka\n[Fila de Mensagens]"}:::docker
+                                DB[("🐘 PostgreSQL\n[Banco de Dados]")]:::database
+                                Prom{"📈 Prometheus\n[Métricas]"}:::monitor
+                                Grafana["📊 Grafana\n[Dashboard Visual]"]:::monitor
+                            end
+
+                            %% O Fluxo (Caminho do Dado)
+                            Fundamentus -- "1. Burlar Cloudflare\nWeb Scraping" --> Bot
+                            Bot -- "2. POST /api/fundos\n(Payload JSON)" --> Controller
+                            Controller -- "3. Responde 202 OK\nPublica na Fila" --> Kafka
+                            Kafka -- "4. Escuta o Tópico\nConsome Pacote" --> Consumer
+                            Consumer -- "5. Envia p/ Cálculo" --> Service
+                            Service -- "6. Aplica Regras\nCalcula Score SRE" --> Repo
+                            Repo -- "7. Salva Ativo\nClassificado" --> DB
+                            
+                            DB -. "8. Consulta Top 10\n(a cada 1 min)" .-> Grafana
+                            Controller -. "Fornece /api/fundos/top10" .-> WebClient
+                            
+                            %% Monitoramento Opcional SRE
+                            SpringBoot -. "/actuator/prometheus" .-> Prom
+                            Prom -. "Data Source" .-> Grafana
+                    </pre>
+                </div>
+                
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">
+                        <h4 class="font-bold text-blue-800">💡 Resiliência (SRE)</h4>
+                        <p class="text-blue-600 mt-1">O uso do Kafka garante que a API nunca trave (timeout), mesmo se houver um pico massivo de dados vindo do robô Python. A API apenas enfileira e o Consumer processa no próprio tempo.</p>
+                    </div>
+                    <div class="bg-green-50 border-l-4 border-green-500 p-3 rounded">
+                        <h4 class="font-bold text-green-800">🔄 Fluxo Desacoplado</h4>
+                        <p class="text-green-600 mt-1">A separação entre Extração (Python) e Processamento (Java) permite escalar, atualizar ou refatorar cada parte do sistema de forma totalmente independente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>

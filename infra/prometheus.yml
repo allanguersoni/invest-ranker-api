@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 5s # Frequência alta para o nosso lab
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'java-invest-ranker'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      # Use o IP do seu WSL que você já descobriu antes
+      - targets: ['172.31.158.117:8080'] 
+
+  # O JOB QUE FALTA PARA O BANCO:
+  - job_name: 'postgres-metrics'
+    static_configs:
+      - targets: ['invest-postgres-exporter:9187']
