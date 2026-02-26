@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitetura - Lab Invest Ranker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .mermaid { display: flex; justify-content: center; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-10">
+
+    <nav class="bg-slate-900 text-white p-4 shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <h1 class="text-2xl font-bold flex items-center gap-2">
+                <i class="fa-solid fa-network-wired"></i> LAB-INVEST-RANKER SRE v2
+            </h1>
+            <span class="text-sm bg-blue-600 px-3 py-1 rounded-full font-semibold shadow-sm">Versão 2.0 - Módulo de Ações</span>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Coluna Esquerda: Texto, Explicação e Estrutura (Ocupa 4 colunas) -->
+        <div class="col-span-1 lg:col-span-4 space-y-6">
+            
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
+                    <i class="fa-solid fa-map-location-dot text-blue-500"></i> O Mapa da Arquitetura
+                </h2>
+                <div class="space-y-4 text-sm text-slate-600">
+                    <p>O projeto adota um modelo híbrido, separando as ferramentas de desenvolvimento local da infraestrutura conteinerizada pesada.</p>
+                    <div class="p-3 bg-slate-50 rounded border border-slate-100">
+                        <h3 class="font-bold text-slate-800 flex items-center gap-2"><i class="fa-brands fa-linux text-yellow-600"></i> Mundo Local (WSL)</h3>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li><strong>Robô Python:</strong> Scraping isolado (venv).</li>
+                            <li><strong>Motor Java:</strong> API REST e Worker (Spring Boot).</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border border-slate-100">
+                        <h3 class="font-bold text-slate-800 flex items-center gap-2"><i class="fa-brands fa-docker text-blue-500"></i> Mundo Conteinerizado</h3>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li><strong>PostgreSQL:</strong> Persistência Relacional.</li>
+                            <li><strong>Kafka:</strong> Mensageria Assíncrona.</li>
+                            <li><strong>Prometheus/Grafana:</strong> Monitoramento e BI.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
+                    <i class="fa-solid fa-folder-tree text-green-500"></i> Estrutura do Projeto Java
+                </h2>
+                <div class="bg-slate-900 text-slate-300 p-4 rounded-lg font-mono text-xs overflow-x-auto shadow-inner border border-slate-700">
+                    <div><i class="fa-regular fa-folder-open text-blue-400"></i> com.lab.invest_ranker</div>
+                    <div class="ml-4 mt-2"><i class="fa-solid fa-folder text-yellow-400"></i> consumer</div>
+                    <div class="ml-8 text-green-400 border-l border-slate-600 pl-2">↳ AcaoConsumer.java <span class="text-blue-400 text-[10px] ml-2 font-bold">(NOVO)</span></div>
+                    <div class="ml-8 text-green-400 border-l border-slate-600 pl-2">↳ InvestimentoConsumer.java</div>
+                    <div class="ml-4 mt-2"><i class="fa-solid fa-folder text-yellow-400"></i> controller</div>
+                    <div class="ml-8 text-green-400 border-l border-slate-600 pl-2">↳ AcaoController.java <span class="text-blue-400 text-[10px] ml-2 font-bold">(NOVO)</span></div>
+                    <div class="ml-8 text-green-400 border-l border-slate-600 pl-2">↳ InvestimentoController.java</div>
+                    <div class="ml-8 text-green-400 border-l border-slate-600 pl-2">↳ SimuladorController.java</div>
+                    <div class="ml-4 mt-2"><i class="fa-solid fa-folder text-yellow-400"></i> model</div>
+                    <div class="ml-8 text-green-400 border-l border-slate-600 pl-2">↳ Acao.java <span class="text-blue-400 text-[10px] ml-2 font-bold">(NOVO)</span></div>
+                    <div class="ml-8 text-green-400 border-l border-slate-600 pl-2">↳ FundoImobiliario.java</div>
+                    <div class="ml-4 mt-2"><i class="fa-solid fa-folder text-yellow-400"></i> repository</div>
+                    <div class="ml-8 text-green-400 border-l border-slate-600 pl-2">↳ AcaoRepository.java <span class="text-blue-400 text-[10px] ml-2 font-bold">(NOVO)</span></div>
+                    <div class="ml-8 text-green-400 border-l border-slate-600 pl-2">↳ FundoImobiliarioRepository.java</div>
+                    <div class="ml-4 mt-2"><i class="fa-solid fa-folder text-yellow-400"></i> service</div>
+                    <div class="ml-8 text-green-400 border-l border-slate-600 pl-2">↳ InvestimentoService.java</div>
+                    <div class="ml-4 mt-3 text-blue-300 font-bold">⚙️ InvestRankerApplication.java</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Coluna Direita: Diagrama, Vantagens e Melhorias (Ocupa 8 colunas) -->
+        <div class="col-span-1 lg:col-span-8 space-y-6">
+            
+            <!-- Bloco do Diagrama -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-slate-800">
+                    <i class="fa-solid fa-project-diagram text-indigo-500"></i> Fluxograma SRE Aprimorado
+                </h2>
+                
+                <div class="overflow-x-auto bg-slate-50 p-4 rounded-lg border border-slate-100 shadow-inner">
+                    <pre class="mermaid">
+                        graph TD
+                            %% Definindo Estilos
+                            classDef external fill:#f3f4f6,stroke:#9ca3af,stroke-width:2px,stroke-dasharray: 5 5,color:#374151;
+                            classDef python fill:#fef08a,stroke:#ca8a04,stroke-width:2px,color:#854d0e;
+                            classDef java fill:#bfdbfe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;
+                            classDef docker fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#312e81;
+                            classDef database fill:#bbf7d0,stroke:#16a34a,stroke-width:2px,color:#14532d;
+                            classDef monitor fill:#fed7aa,stroke:#ea580c,stroke-width:2px,color:#7c2d12;
+
+                            %% Elementos Externos
+                            Fundamentus(("🌐 Site\nFundamentus")):::external
+                            WebClient(("📱 Futuros\nApps Web / Mobile")):::external
+
+                            subgraph WSL ["💻 Mundo Local (Linux / WSL)"]
+                                direction TB
+                                Bot["🐍 Robôs Python\n(rastreador_fii.py / rastreador_acoes.py)\n[Extração]"]:::python
+                                
+                                subgraph SpringBoot ["☕ Motor Java (Spring Boot)"]
+                                    direction TB
+                                    Controller["⚙️ Controllers\n(Investimento / Acao)\n[API REST]"]:::java
+                                    Consumer["🎧 Consumers\n(FII / Acao)\n[Workers Assíncronos]"]:::java
+                                    Service["🧠 InvestimentoService\n[Motor de Regras]"]:::java
+                                    Repo["🗄️ Repositories\n(FII / Acao)\n[JPA / Hibernate]"]:::java
+                                end
+                            end
+
+                            subgraph Docker ["🐳 Mundo Conteinerizado (Docker Desktop)"]
+                                direction TB
+                                Kafka{"📬 Apache Kafka\n[Tópicos: FIIs e Ações]"}:::docker
+                                DB[("🐘 PostgreSQL\n[Banco Relacional]")]:::database
+                                Prom{"📈 Prometheus\n[Time Series DB]"}:::monitor
+                                Grafana["📊 Grafana\n[Visualização SRE]"]:::monitor
+                            end
+
+                            %% O Fluxo (Caminho do Dado com Protocolos)
+                            Fundamentus -- "1. HTTP GET\n(Scraping c/ Bypass)" --> Bot
+                            Bot -- "2. POST /api/fundos\nPOST /api/acoes" --> Controller
+                            Controller -- "3. Produz Mensagem\n(Ack 202 - Fast Response)" --> Kafka
+                            Kafka -- "4. Consome Tópico\n(FIIs e Ações)" --> Consumer
+                            Consumer -- "5. Mapeia p/ DTO\nInicia Processamento" --> Service
+                            Service -- "6. Calcula Score SRE\nConverte p/ Entidade" --> Repo
+                            Repo -- "7. Transação SQL\n(INSERT / UPDATE)" --> DB
+                            
+                            DB -. "8. Consulta Direta\n(SQL Select a cada 1min)" .-> Grafana
+                            Controller -. "9. GET /api/fundos/top10\n(Responde JSON)" .-> WebClient
+                            
+                            %% Monitoramento Opcional SRE
+                            SpringBoot -. "Métricas de Saúde\n(/actuator/prometheus)" .-> Prom
+                            Prom -. "Data Source\n(PromQL)" .-> Grafana
+                    </pre>
+                </div>
+            </div>
+
+            <!-- Bloco de Vantagens e Melhorias divididos em 2 colunas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Vantagens da Solução Atual -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h2 class="text-lg font-bold mb-4 flex items-center gap-2 text-slate-800 border-b pb-2">
+                        <i class="fa-solid fa-award text-green-500"></i> Vantagens da Solução Atual
+                    </h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <div class="bg-green-100 p-2 rounded text-green-600 mt-1"><i class="fa-solid fa-bolt"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Alta Resiliência (Buffer)</h4>
+                                <p class="text-xs text-slate-600 mt-1">O Kafka atua como um "amortecedor". Se o robô enviar 10.000 fundos de uma vez, a API não cai. Ela enfileira no Kafka e processa aos poucos.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="bg-blue-100 p-2 rounded text-blue-600 mt-1"><i class="fa-solid fa-puzzle-piece"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Desacoplamento de Tecnologias</h4>
+                                <p class="text-xs text-slate-600 mt-1">O que é bom de fazer em Python (Scraping) fica no Python. O que é bom de fazer em Java (Regras de Negócio e APIs robustas) fica no Java.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="bg-orange-100 p-2 rounded text-orange-600 mt-1"><i class="fa-solid fa-eye"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Observabilidade (SRE Nativo)</h4>
+                                <p class="text-xs text-slate-600 mt-1">Com Actuator, Prometheus e Grafana, você não "acha" que o sistema está no ar, você <strong>vê</strong> o consumo de CPU, memória e os dados em tempo real.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="bg-indigo-100 p-2 rounded text-indigo-600 mt-1"><i class="fa-solid fa-layer-group"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Escalabilidade Comprovada</h4>
+                                <p class="text-xs text-slate-600 mt-1">A adição do módulo de <strong>Ações</strong> validou a arquitetura. Foi possível adicionar novos fluxos (Controllers, Consumers, Repositories) sem engargalar ou quebrar o fluxo original dos Fundos Imobiliários.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Melhorias Futuras -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h2 class="text-lg font-bold mb-4 flex items-center gap-2 text-slate-800 border-b pb-2">
+                        <i class="fa-solid fa-hammer text-orange-500"></i> Melhorias da Arquitetura (Roadmap)
+                    </h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <div class="bg-purple-100 p-2 rounded text-purple-600 mt-1"><i class="fa-solid fa-database"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Camada de Cache (Redis)</h4>
+                                <p class="text-xs text-slate-600 mt-1">Atualmente a rota <code>/top10</code> bate direto no PostgreSQL. Adicionar o Redis evitaria consultas ao banco de dados para dados que demoram a mudar.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="bg-red-100 p-2 rounded text-red-600 mt-1"><i class="fa-solid fa-shield-halved"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Segurança (Spring Security/JWT)</h4>
+                                <p class="text-xs text-slate-600 mt-1">A API de ingestão de dados está aberta. É necessário implementar um token de autorização para garantir que apenas o "seu" Robô Python poste dados no Kafka.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="bg-teal-100 p-2 rounded text-teal-600 mt-1"><i class="fa-solid fa-server"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Dockerização Total / Cloud</h4>
+                                <p class="text-xs text-slate-600 mt-1">O Spring Boot e o Python ainda rodam "soltos" no WSL. O próximo passo é criar um <code>Dockerfile</code> para eles e orquestrar tudo com Docker Compose ou Kubernetes (EKS).</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>
