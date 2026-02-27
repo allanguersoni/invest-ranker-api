@@ -1,0 +1,529 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 3,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "afei7jijkor9cc"
+      },
+      "description": "O que é: O ranking definitivo das ações mais baratas e eficientes da bolsa, usando o algoritmo de Benjamin Graham (mentor de Warren Buffett). O robô cruza o \"Preço Justo\" (baseado no patrimônio e lucro da empresa) com a eficiência de gestão (ROE).\n\nComo ler: Foco na coluna \"Margem (%)\". Ela indica o seu \"colchão de segurança\".\nExemplo Prático: Se o algoritmo calculou que o Preço Justo do Banco do Brasil é R$ 60,00, mas a cotação atual na tela está R$ 30,00, a Margem de Segurança é de 100%. Significa que você está comprando uma nota de 100 Reais pagando apenas 50 Reais. A recomendação \"COMPRA FORTE 🚀\" exige no mínimo 30% de margem e um ROE (lucratividade) acima de 10%.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 50
+              },
+              {
+                "color": "green",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRES}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  score as \"Score IA\",\r\n  recomendacao as \"Recomendação\",\r\n  ticker as \"Ação\", \r\n  cotacao_atual as \"Cotação (R$)\", \r\n  preco_justo_graham as \"Preço Justo (R$)\",\r\n  margem_seguranca as \"Margem (%)\",\r\n  pl as \"P/L\",\r\n  roe as \"ROE (%)\",\r\n  TO_CHAR(data_atualizacao, 'DD/MM/YYYY HH24:MI') as \"Última Leitura\"\r\nFROM acao \r\nWHERE score > 0 AND pl > 0 AND margem_seguranca > 0\r\nORDER BY score DESC, margem_seguranca DESC \r\nLIMIT 50;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "🏆 Top Oportunidades (Fórmula de Graham)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "afei7jijkor9cc"
+      },
+      "description": "O que é: O filtro anti-armadilhas para quem busca renda passiva (Dividendos). Na bolsa, muitas empresas pagam dividendos altos apenas porque a cotação despencou (o chamado \"Value Trap\" ou Armadilha de Valor).\n\nComo ler: Este painel só lista empresas que pagaram mais de 6% de dividendos nos últimos 12 meses E que ainda possuem Margem de Segurança positiva (estão baratas).\nExemplo Prático: A empresa \"X\" está pagando 20% de dividendo, mas o robô classificou como \"CARO / AFASTAR\". Por quê? Porque ela está sendo negociada acima do que vale. Se você comprar, ganha 20% de dividendo, mas a cotação pode cair 40% no dia seguinte. Aqui só entram as \"Vacas Leiteiras\" que estão em promoção.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 16,
+        "x": 0,
+        "y": 12
+      },
+      "id": 5,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRES}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  recomendacao as \"Status\",\r\n  ticker as \"Ação\",\r\n  dividendo_ultimos12_meses as \"Yield (% a.a)\",\r\n  margem_seguranca as \"Margem Desconto (%)\",\r\n  TO_CHAR(data_atualizacao, 'DD/MM/YYYY HH24:MI') as \"Última Leitura\"\r\nFROM acao\r\nWHERE dividendo_ultimos12_meses > 6 AND margem_seguranca > 0\r\nORDER BY \r\n  CASE WHEN recomendacao LIKE '%COMPRA FORTE%' THEN 1 ELSE 2 END,\r\n  dividendo_ultimos12_meses DESC;\r\n--LIMIT 10;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "🐄 Vacas Leiteiras (Altos Dividendos + Desconto)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "afei7jijkor9cc"
+      },
+      "description": "O que é: Uma visão panorâmica (Top-Down) de como o algoritmo está enxergando a bolsa de valores neste exato segundo.\n\nComo ler: Serve para validar a tese do \"Termômetro\" ao lado. Se a grande maioria da pizza estiver Verde/Dourada (\"Compra Forte\" e \"Boa Opção\"), significa que há uma liquidação generalizada na bolsa. Se a fatia Vermelha (\"Caro\") for a maior, significa que o mercado subiu demais e está difícil encontrar pechinchas seguras.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CILADA (Prejuízo/Sem Liquidez)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "BOA OPÇÃO 🟢"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "COMPRA FORTE 🚀"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CARO / AFASTAR 🔴"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 12
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRES}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT recomendacao as \"Status\", count(ticker) as \"Quantidade\" \r\nFROM acao \r\nGROUP BY recomendacao \r\nORDER BY \"Quantidade\" DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "🎯 Radar de Sentimento",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "afei7jijkor9cc"
+      },
+      "description": "O que é: Métrica operacional de confiabilidade (Health Check) do motor de raspagem de dados (Python) e do mensageiro (Kafka).\n\nComo ler: A B3 possui cerca de 400 empresas listadas, mas nosso robô possui um filtro de liquidez: ele descarta \"micos\" (empresas falidas ou sem negociação diária).\nExemplo Prático: Se este número estiver entre 150 e 250, o robô filtrou as melhores empresas com sucesso. Se este número for 0, significa que a conexão com a B3 falhou ou o robô Python está desligado.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 20
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRES}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(ticker) as \"Total\" FROM acao;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "📊 Ações Analisadas",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "afei7jijkor9cc"
+      },
+      "description": "O que é: O sensor de \"Ganância e Medo\" da B3. Ele calcula a média do desconto (Margem de Segurança) de todas as empresas lucrativas da bolsa brasileira no dia de hoje.\n\nComo ler: > 🟢 Acima de 15%: Mercado em pânico ou pessimista. As empresas estão muito baratas na média. Cenário ideal para ir às compras.\n🟡 Entre 0% e 15%: Mercado neutro, pagando o preço justo histórico.\n🔴 Abaixo de 0% (Negativo): Mercado eufórico e caro (Bolha). Na média, os investidores estão pagando mais caro do que o patrimônio das empresas justifica. Hora de ter cautela.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red"
+              },
+              {
+                "color": "green",
+                "value": 15
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 20
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRES}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT avg(margem_seguranca) as \"Média (%)\" \r\nFROM acao \r\nWHERE pl > 0;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "🌡️ Margem Média (Mercado)",
+      "type": "stat"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "SRE Lab - Ações B3 (Value Investing)",
+  "uid": "bfei9mtnzsd1cc",
+  "version": 3,
+  "weekStart": ""
+}

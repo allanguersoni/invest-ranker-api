@@ -18,3 +18,5 @@ bot/__pycache__/
 .idea/
 .env
 .DS_Store
+infra/grafana_data/
+*.deb

@@ -8,8 +8,8 @@ volumes:
     name: invest_postgres_data
   kafka_data:
     name: invest_kafka_data
-  grafana_data:
-    name: invest_grafana_data
+  # O grafana_data foi removido daqui propositalmente. 
+  # Agora ele é uma pasta física gerenciada por você, não pelo Docker.
 
 services:
   # 1. Banco de Dados
@@ -91,7 +91,8 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: admin
       GF_USERS_ALLOW_SIGN_UP: false
     volumes:
-      - grafana_data:/var/lib/grafana
+      # A MÁGICA SRE AQUI: O ./ diz ao Docker para criar a pasta física
+      - ./grafana_data:/var/lib/grafana
     depends_on:
       - prometheus
     networks:
